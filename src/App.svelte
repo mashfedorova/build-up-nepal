@@ -16,11 +16,44 @@
   let data = []
 
   let width = document.body.clientWidth
+  let whichX = "lat"
+  let whichY = "long"
+  let fX = ""
+  let lines = ""
+  // let simX = "typeRec"
+
+  let test = "one"
+
   $: widthChart = width > 900 ? 800 : width - 100
-  $: console.log(width)
 
   function resize() {
     width = document.body.clientWidth
+  }
+
+  function step1() {
+    whichX = "x"
+    fX = "typeRec"
+    whichY = "y"
+    // simX = "x"
+  }
+
+  function step2() {
+    whichX = "x"
+    // fX = "peakImpYear"
+    fX = "statusGrouped"
+    whichY = "y"
+    test = "two"
+    // simX = "test"
+  }
+
+  function step3() {
+    whichX = "x"
+    // fX = "peakImpYear"
+    fX = "statusGrouped"
+    whichY = "y"
+    test = "two"
+    // simX = "test"
+    lines = "show"
   }
 
   onMount(resize)
@@ -33,16 +66,26 @@
     })
     geo = shapesNepal
 
-    const raw = await csv("data/nepal.csv", (d) => {
+    const raw = await csv("data/nepalUpdatedCoord.csv", (d) => {
+      // const raw = await json("data/testData.json", (d) => {
       return {
         ...d,
+        peakImpYearNum: +d.peakImpYear,
       }
     })
     data = raw
   })
 
-  // $: console.log(data)
   onMount(() => {
+    // var canvas = document.getElementById("test")
+    // var ctx = canvas.getContext("2d")
+
+    // ctx.fillStyle = "rgb(200, 0, 0)"
+    // ctx.fillRect(0, 50, 500, 500)
+
+    // ctx.fillStyle = "rgba(0, 0, 200, 0.5)"
+    // ctx.fillRect(30, 30, 50, 50)
+
     gsap.to("#wobble", {
       xPercent: -50,
       yPercent: -100,
@@ -54,7 +97,6 @@
         start: "93% 99%", // when the center of the trigger hits 40% from the top of the viewport
         end: "+=1000", // end after scrolling 1000px beyond the start
         scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-        markers: true,
       },
     })
 
@@ -69,7 +111,6 @@
         start: "93% 99%", // when the center of the trigger hits 40% from the top of the viewport
         end: "+=1000", // end after scrolling 1000px beyond the start
         scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-        markers: true,
       },
     })
 
@@ -85,7 +126,6 @@
         start: "93% 99%", // when the center of the trigger hits 40% from the top of the viewport
         end: "+=1000", // end after scrolling 1000px beyond the start
         scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-        markers: true,
       },
     })
     gsap.to("#logo-title", {
@@ -100,8 +140,52 @@
         start: "93% 99%", // when the center of the trigger hits 40% from the top of the viewport
         end: "+=1000", // end after scrolling 1000px beyond the start
         scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-        markers: true,
       },
+    })
+
+    gsap.to("#test", {
+      // xPercent: -200,
+      yPercent: 55,
+      delay: 2,
+      // ease: "power2.out",
+      // duration: 10,
+    })
+
+    ScrollTrigger.create({
+      trigger: "#canvas",
+      endTrigger: "#step-4",
+      start: "center center",
+      end: "#step-4",
+      pin: true,
+      pinSpacing: false,
+      markers: true,
+    })
+
+    ScrollTrigger.create({
+      trigger: "#step-1",
+      start: "bottom 50%",
+      markers: true,
+    })
+
+    ScrollTrigger.create({
+      trigger: "#step-2",
+      start: "top 90%",
+      markers: true,
+      onEnter: step1,
+    })
+
+    ScrollTrigger.create({
+      trigger: "#step-3",
+      start: "top 90%",
+      markers: true,
+      onEnter: step2,
+    })
+
+    ScrollTrigger.create({
+      trigger: "#step-4",
+      start: "top 90%",
+      markers: true,
+      onEnter: step3,
     })
   })
 </script>
@@ -168,10 +252,54 @@
     </svg>
   </svg>
   <!-- <Map {geo} {data} width={widthChart} /> -->
-  <div class="canvas" bind:this={width}>
-    <MapCanvass {geo} {data} width={widthChart} />
+  <div id="canvas" bind:this={width}>
+    <MapCanvass
+      {geo}
+      {data}
+      width={widthChart}
+      {whichX}
+      {whichY}
+      {fX}
+      {test}
+      {lines}
+    />
   </div>
+  <canvas id="test" width="800" height="800" />
 </div>
+<article class="scrolls">
+  <section class="step" id="step-1">
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo,
+      repellendus porro voluptatum natus voluptates qui, praesentium sapiente
+      odio magni, eaque vel quidem. Porro pariatur nobis aspernatur, ea
+      praesentium eveniet sed?
+    </p>
+  </section>
+  <section class="step" id="step-2">
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo,
+      repellendus porro voluptatum natus voluptates qui, praesentium sapiente
+      odio magni, eaque vel quidem. Porro pariatur nobis aspernatur, ea
+      praesentium eveniet sed?
+    </p>
+  </section>
+  <section class="step" id="step-3">
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo,
+      repellendus porro voluptatum natus voluptates qui, praesentium sapiente
+      odio magni, eaque vel quidem. Porro pariatur nobis aspernatur, ea
+      praesentium eveniet sed?
+    </p>
+  </section>
+  <section class="step" id="step-4">
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo,
+      repellendus porro voluptatum natus voluptates qui, praesentium sapiente
+      odio magni, eaque vel quidem. Porro pariatur nobis aspernatur, ea
+      praesentium eveniet sed?
+    </p>
+  </section>
+</article>
 <p>
   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
   cumque illum esse inventore id quidem provident, quae error possimus a
@@ -345,12 +473,12 @@
   cumque illum esse inventore id quidem provident, quae error possimus a
   repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
   quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
+  odit accusamus nam repellat optirgb(185, 160, 140)o eum assumenda vitae hic
+  porro qui molestias laborum similique doloremque illo quos perferendis
+  voluptatum esse quidem quasi. Libero aut commodi exercitationem, minus animi
+  totam sunt voluptatibus reiciendis eius similique quis assumenda quod eligendi
+  debitis in pariatur nobis facilis blanditiis illum harum a laudantium quas ab?
+  Quo voluptatibus quia labore eos, totam temporibus est veniam.
 </p>
 
 <style>
@@ -404,10 +532,38 @@
     width: 50%;
   } */
 
-  .canvas {
+  #canvas {
     margin: 0 auto;
     width: 90%;
     display: flex;
     justify-content: center;
+    z-index: -11;
   }
+
+  #step-1 {
+    margin-top: 500px;
+  }
+
+  .step {
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 0 rgb(165, 165, 165);
+    margin: 0 auto;
+    width: 55%;
+    max-width: 600px;
+    margin-bottom: 85vh;
+    position: relative;
+    background-color: rgb(238, 220, 211);
+    padding: 20px;
+    line-height: 1.4;
+    font-size: 1.2rem;
+    position: relative;
+  }
+
+  /* #test {
+    position: fixed;
+    top: 500;
+    bottom: 0;
+    left: 500px;
+    right: 0;
+  } */
 </style>
