@@ -4,10 +4,16 @@
   export let x1 = 0
   export let y1 = 0
   export let x2 = 0
+  // export let opacity = 1
 
   let y2 = 700
 
   let amount = 0
+
+  // const _opacity = tweened(opacity, {
+  //   duration: 800,
+  //   interpolate: interpolateLab,
+  // })
 
   $: render = ({ context }) => {
     const curve = curveBumpY(context)
@@ -19,6 +25,18 @@
 
     curve.lineEnd()
     context.stroke()
+
+    // const _color = tweened(fill, {
+    //   duration: 800,
+    //   interpolate: interpolateLab,
+    // })
+    // const _x = tweened(x, { duration: 600, easing: cubicOut })
+    // $: _x.set(x)
+
+    // const _y = tweened(y, { duration: 600, easing: cubicOut })
+    // $: _y.set(y)
+
+    // $: _color.set(fill)
 
     /////////////
 
