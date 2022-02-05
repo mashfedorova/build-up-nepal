@@ -69,7 +69,6 @@
     colorVar = "const"
   }
 
-  $: console.log(whichX)
 
   onMount(resize)
 

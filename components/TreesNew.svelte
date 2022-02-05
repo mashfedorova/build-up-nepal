@@ -7,7 +7,6 @@
 
   $: pathWidth = 50
   $: perRow = Math.floor((width - 10) / pathWidth)
-  $: console.log("perRow " + perRow)
   $: svgHeight = (Math.ceil(trees.length / perRow) + 0.5) * pathWidth
 </script>
 
