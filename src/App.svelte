@@ -349,6 +349,14 @@
       >
     </p>
     <p class="byline">Data provided by Build Up Nepal</p>
+    <p class="byline">
+      Calculations of <sub>C02 levels </sub> are bases on
+      <a
+        href="https://www.epa.gov/energy/greenhouse-gas-equivalencies-calculator"
+        target="_blank"
+        >EPA Greenhouse Gas Equivalencies Calculator
+      </a>
+    </p>
   </div>
 </div>
 
