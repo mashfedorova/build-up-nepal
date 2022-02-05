@@ -99,17 +99,6 @@
   })
 
   onMount(() => {
-    gsap.to("#wobble", {
-      xPercent: -50,
-      yPercent: -100,
-
-      scrollTrigger: {
-        trigger: "#svgIntro",
-        start: "93% 99%",
-        end: "+=1000",
-        scrub: 1,
-      },
-    })
 
     ScrollTrigger.create({
       trigger: "#canvas",
@@ -181,7 +170,6 @@
     {whichY}
     {fX}
     {groupingVar}
-    {fill}
     {entrepreneur}
     {colorVar}
   />

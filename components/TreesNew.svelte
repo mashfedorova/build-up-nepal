@@ -13,7 +13,6 @@
 <Canvas {width} height={svgHeight}>
   {#each trees as d, i}
     <Squares
-      {trees}
       x={((i % perRow) + 0.2) * pathWidth}
       y={(Math.floor(i / perRow) + 0.5) * pathWidth}
       name={d}

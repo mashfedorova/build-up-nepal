@@ -12,12 +12,9 @@
 <canvas id="houses" {width} height={canvasHeight}>
   {#each houses as d, i}
     <House
-      {houses}
       x={((i % perRow) + 0.5) * houseWidth}
       y={(Math.floor(i / perRow) + 0.5) * houseWidth}
       name={d}
-      {width}
-      {canvasHeight}
     />
   {/each}
 </canvas>
