@@ -143,12 +143,6 @@
 
 <svelte:window on:resize={resize} />
 <div class="intro-container">
-  <img
-    class="img-bg"
-    id="intro-img"
-    src="images/3I1A9619.jpg"
-    alt="house with a scenic view"
-  />
   <div class="intro-paragraph">
     <img
       id="img-logo-nepal"
@@ -167,10 +161,13 @@
       growing rapidly, presenting a unique opportunity to create jobsfor poor
       families. But the conventional fired brick industry is responsible for
       poorworking conditions, child labor and 37% of CO2 emissions
-      fromcombustion in Nepal.Build up Nepal’s solution - innovative
-      micro-enterprise model combining two solutions: (1) Low-cost, eco-friendly
-      technology, safe housing for poor families(2) Innovative micro-enterprise
-      model, creating jobs for poor families
+      fromcombustion in Nepal.
+    </p>
+    <p class="intro-text">
+      Build up Nepal’s solution - innovative micro-enterprise model combining
+      two solutions: (1) Low-cost, eco-friendly technology, safe housing for
+      poor families(2). Innovative micro-enterprise model, creating jobs for
+      poor families
     </p>
     <p class="scroll">&#8595 Scroll down to discover more about our impact</p>
   </div>
@@ -361,42 +358,27 @@
 </div>
 
 <style>
-  #intro-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: relative;
-  }
-
   .intro-container {
-    height: 100%;
     position: relative;
     text-align: left;
-    color: white;
-  }
-
-  .intro-paragraph {
-    position: absolute;
-    top: 50px;
-    left: 20%;
+    position: relative;
+    margin: 0 auto;
     width: 60%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
   }
 
   .scroll {
-    color: rgb(238, 238, 238);
+    color: rgb(44, 44, 44);
   }
 
   .intro-text {
-    box-shadow: 1px 1px 3px rgb(35, 63, 153, 0.5);
-    /* width: 80%; */
     max-width: 800px;
-    /* position: relative; */
-    background-color: rgb(35, 63, 153, 0.5);
-    padding: 20px;
     line-height: 1.4;
     font-size: 1.2rem;
     opacity: 0.9;
+    color: rgb(44, 44, 44);
   }
 
   #img-logo-nepal {
@@ -523,7 +505,7 @@
     letter-spacing: 0.2rem;
     font-weight: 600;
     font-size: 1.2rem;
-    color: rgb(238, 238, 238);
+    color: rgb(188, 74, 60);
     margin-top: -50px;
   }
 
@@ -532,7 +514,7 @@
     width: 90%;
     display: flex;
     justify-content: center;
-    margin-top: 200px;
+    /* margin-top: 20%; */
   }
 
   .step {
