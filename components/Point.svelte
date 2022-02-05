@@ -4,14 +4,11 @@
   import { cubicOut } from "svelte/easing"
   import { interpolateLab } from "d3-interpolate"
 
-  // const colors = ["rgb(255, 62, 0)", "rgb(64, 179, 255)", "rgb(103, 103, 120)"]
-
-  export let fill = "rgb(255, 62, 0)"
+  export let fill = "rgb(188, 74, 60)"
 
   export let x = 0
   export let y = 0
   export let width
-  // export let fill = $color
 
   const _color = tweened(fill, {
     duration: 800,
@@ -31,7 +28,7 @@
     context.fillStyle = $_color
     context.fill()
     context.stroke()
-    context.strokeStyle = "#e9dbc6"
+    context.strokeStyle = "#e0e1e2"
   }
 </script>
 

@@ -11,6 +11,8 @@
   import Map from "./../components/Map.svelte"
   import MapCanvass from "./../components/MapCanvass.svelte"
   import Trees from "./../components/Trees.svelte"
+  import TreesNew from "./../components/TreesNew.svelte"
+  import Houses from "./../components/Houses.svelte"
   gsap.registerPlugin(ScrollTrigger)
 
   let geo = []
@@ -20,13 +22,16 @@
   let whichX = "lat"
   let whichY = "long"
   let fX = ""
-  let fill = "rgb(237, 137, 102)"
-  let test = "one"
+  let fill = "rgb(188, 74, 60)"
+  let groupingVar = "one"
   let opacity = 1
   let entrepreneur = ""
   let colorVar = "const"
+  let trees = []
+  let houses = []
 
-  $: widthChart = width > 900 ? 800 : width - 100
+  $: widthChart = width > 800 ? 900 : width - 100
+  $: widthChartmain = width > 900 ? 900 : width - 100
 
   function resize() {
     width = document.body.clientWidth
@@ -36,30 +41,35 @@
     whichX = "x"
     fX = "typeRec"
     whichY = "y"
-    // simX = "x"
     entrepreneur = "Entrepreneur"
   }
 
   function step2() {
-    whichX = "x"
-    // fX = "peakImpYear"
     fX = "statusGrouped"
-    whichY = "y"
-    test = "two"
-    // simX = "test"
+    groupingVar = "two"
     fill = "color"
-    // text = "another category"
     colorVar = "type"
   }
 
   function step3() {
-    whichX = "x"
-    // fX = "peakImpYear"
-    fX = "statusGrouped"
-    whichY = "y"
-    test = "two"
-    // simX = "test"
+    groupingVar = "two"
   }
+
+  function step1Back() {
+    colorVar = "const"
+    whichX = "lat"
+    whichY = "long"
+    fX = ""
+    entrepreneur = ""
+  }
+
+  function step2Back() {
+    groupingVar = "one"
+    fX = "typeRec"
+    colorVar = "const"
+  }
+
+  $: console.log(whichX)
 
   onMount(resize)
 
@@ -72,36 +82,34 @@
     geo = shapesNepal
 
     const raw = await csv("data/nepalUpdatedCoord.csv", (d) => {
-      // const raw = await json("data/testData.json", (d) => {
       return {
         ...d,
         peakImpYearNum: +d.peakImpYear,
       }
     })
     data = raw
+
+    const rawTrees = await json("data/treesData.json", (d) => {
+      return [...d]
+    })
+    trees = rawTrees
+
+    const housesRaw = await json("data/housesData.json", (d) => {
+      return [...d]
+    })
+    houses = housesRaw
   })
 
   onMount(() => {
-    // var canvas = document.getElementById("test")
-    // var ctx = canvas.getContext("2d")
-
-    // ctx.fillStyle = "rgb(200, 0, 0)"
-    // ctx.fillRect(0, 50, 500, 500)
-
-    // ctx.fillStyle = "rgba(0, 0, 200, 0.5)"
-    // ctx.fillRect(30, 30, 50, 50)
-
     gsap.to("#wobble", {
       xPercent: -50,
       yPercent: -100,
-      // ease: "power2.out",
-      // duration: 10,
+
       scrollTrigger: {
         trigger: "#svgIntro",
-        // pin: true, // pin the trigger element while active
-        start: "93% 99%", // when the center of the trigger hits 40% from the top of the viewport
-        end: "+=1000", // end after scrolling 1000px beyond the start
-        scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+        start: "93% 99%",
+        end: "+=1000",
+        scrub: 1,
       },
     })
 
@@ -112,55 +120,53 @@
       // duration: 10,
       scrollTrigger: {
         trigger: "#svgIntro",
-        // pin: true, // pin the trigger element while active
-        start: "93% 99%", // when the center of the trigger hits 40% from the top of the viewport
-        end: "+=1000", // end after scrolling 1000px beyond the start
-        scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+        start: "93% 99%",
+        end: "+=1000",
+        scrub: 1,
       },
     })
 
     gsap.to("#subtitle", {
-      // xPercent: -200,
       yPercent: -2000,
-      // delay: 0.5,
       ease: "power2.out",
-      // duration: 10,
       scrollTrigger: {
         trigger: "#svgIntro",
-        // pin: true, // pin the trigger element while active
-        start: "93% 99%", // when the center of the trigger hits 40% from the top of the viewport
-        end: "+=1000", // end after scrolling 1000px beyond the start
-        scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+        start: "93% 99%",
+        end: "+=1000",
+        scrub: 1,
       },
     })
     gsap.to("#logo-title", {
-      // xPercent: -200,
       yPercent: -1500,
-      // delay: 0.5,
-      // ease: "power2.out",
-      // duration: 10,
       scrollTrigger: {
         trigger: "#svgIntro",
-        // pin: true, // pin the trigger element while active
-        start: "93% 99%", // when the center of the trigger hits 40% from the top of the viewport
-        end: "+=1000", // end after scrolling 1000px beyond the start
-        scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+        start: "93% 99%",
+        end: "+=1000",
+        scrub: 1,
       },
     })
-
-    gsap.to("#test", {
-      // xPercent: -200,
-      yPercent: 55,
-      delay: 2,
-      // ease: "power2.out",
-      // duration: 10,
+    gsap.to(".cover-text", {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: "#svgIntro",
+        start: "93% 99%",
+        end: "+=1000",
+      },
+    })
+    gsap.to(".cover-rect", {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: "#svgIntro",
+        start: "93% 99%",
+        end: "+=1000",
+      },
     })
 
     ScrollTrigger.create({
       trigger: "#canvas",
-      endTrigger: "#step-4",
+      endTrigger: "#step-3",
       start: "center center",
-      end: "#step-4",
+      end: "#step-3",
       pin: true,
       pinSpacing: false,
       markers: true,
@@ -174,23 +180,18 @@
 
     ScrollTrigger.create({
       trigger: "#step-2",
-      start: "top 90%",
+      start: "top 95%",
       markers: true,
       onEnter: step1,
+      onLeaveBack: step1Back,
     })
 
     ScrollTrigger.create({
       trigger: "#step-3",
-      start: "top 90%",
+      start: "top 95%",
       markers: true,
       onEnter: step2,
-    })
-
-    ScrollTrigger.create({
-      trigger: "#step-4",
-      start: "top 90%",
-      markers: true,
-      onEnter: step3,
+      onLeaveBack: step2Back,
     })
   })
 </script>
@@ -198,24 +199,7 @@
 <svelte:window on:resize={resize} />
 <div class="intro" bind:this={width}>
   <svg id="svgIntro" width="100%">
-    <!-- <svg id="ourSVG" height="100%" width="100%"> -->
-
-    <!-- <mask id="mask-image-2012">
-    <path
-      id="wobble-2012-image"
-      d="M511.6,30.4c12.9,6.8,100.3,54.2,114.9,154c10.2,69.7-14.1,147.8-73.4,190.3c-61,43.7-122.3,47.5-242.3,45.1
-	C191.6,417.4,121.6,416,65,362c-6.5-6.2-78.2-77.4-62.7-176.5C16,97.8,88.1,51.9,109,40c13.6-7.8,41.2-21.5,202-25
-	C420.4,12.6,475.9,11.6,511.6,30.4z"
-      fill="red"
-    />
-  </mask> -->
     <mask id="mask">
-      <!-- <g transform="translate(500,150)"> -->
-      <!-- <path
-      id="wobble"
-      d="M53.48-414.83C-36.82-373-33.76-278.17-19.91-194c12.17,74,66.56,136.46,2.05,205.61s-109.6,66-153.69,147.16,31,143.15-55,230.15-274,14.62-267,206S-750.66,726.14-680.2,819.76c75,99.68,487.9,207.62,632,282.55,342.19,177.9,764,148.24,902.86-42.68C994.14,867.89,1031.26,327.21,819.11-35.12,647.45-328.3,300.19-406.44,276.48-428.27,223.48-477.07,92.55-432.94,53.48-414.83Z"
-      fill="white"
-    /> -->
       <path
         id="wobble"
         d="M4167.3,866.6l-45.7-2.6c-45.5-2.1-137.2-8.2-219.1,13.3c-82.2,20.7-154.6,68.9-231.7,103.9
@@ -229,10 +213,7 @@
         transform="translate(500,150)"
         fill="white"
       />
-      <!-- </g> -->
     </mask>
-    <!-- <Map {geo} {data} width={widthChart} /> -->
-
     <image
       href="images/3I1A9619.jpeg"
       width="100%"
@@ -241,22 +222,150 @@
       mask="url(#mask)"
     />
 
-    <!-- <text id="main-title" x="23%" y="20%" mask="url(#mask)">Build-up Nepal</text
-    > -->
-    <!-- <svg id="svgTitle" x="23%" y="22%" width="100" height="100" mask="url(#mask)"> -->
     <svg id="svgTitle" x="23%" y="15%" overflow="visible">
-      <text id="main-title" x="0%" y="65px">Build-up Nepal</text>
-      <text id="subtitle" x="40px" y="95px">an interactive story</text>
-      <image
-        id="logo-title"
-        href="images/logoCropped.png"
-        x="-80px"
-        y="1px"
-        width="75px"
-      />
+      {#if width > 800}
+        <text id="main-title" x="0%" y="65px">Build-up Nepal</text>
+        <text id="subtitle" x="40px" y="95px">an interactive story</text>
+        <image
+          id="logo-title"
+          href="images/logoCropped.png"
+          x="-80px"
+          y="1px"
+          width="75px"
+        />
+        <rect
+          class="cover-rect"
+          x="-5px"
+          y="120px"
+          width="620"
+          height="245"
+          fill="rgb(35, 63, 153)"
+          opacity="0.5"
+        />
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="150px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >Build up Nepal is on a mission to break the vicious poverty cycle in
+          rural Nepal through
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="170px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >safe houses and long-term jobs for poor families.This is important
+          because millions
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="190px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >of families in rural Nepal live in deep poverty and are forced to
+          migrate from their
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="210px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >villages due to lack of jobs, housing, and economic development. The
+          construction
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="230px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >industry in Nepal are growing rapidly, presenting a unique
+          opportunity to create jobs
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="250px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >for poor families. But the conventional fired brick industry is
+          responsible for poor
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="270px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >working conditions, child labor and 37% of CO2 emissions from
+          combustion in Nepal.
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="300px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >Build up Nepal’s solution - innovative micro-enterprise model
+          combining two solutions:
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="320px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >(1) Low-cost, eco-friendly technology, safe housing for poor families
+        </text>
+        <text
+          class="cover-text"
+          x="0.5%"
+          y="340px"
+          width="600"
+          height="200"
+          fill="rgb(238, 238, 238)"
+          >(2) Innovative micro-enterprise model, creating jobs for poor
+          families
+        </text>
+      {/if}
+      <g transform="translate(0,380)" class="cover-text">
+        <path
+          d="M0.7,12.5l15,18.4c0.1,0.2,0.4,0.2,0.6,0L29,12.5"
+          fill="none"
+          stroke="rgb(238, 238, 238)"
+          stroke-width="2"
+        />
+        <path
+          d="M0.7,2.5l15,18.4c0.1,0.2,0.4,0.2,0.6,0L29,2.5"
+          fill="none"
+          stroke="rgb(238, 238, 238)"
+          stroke-width="2"
+        />
+        <text class="cover-text" x="50" y="20" fill="rgb(238, 238, 238)"
+          >Scroll to learn about our impact
+        </text>
+      </g>
+      {#if width < 801}
+        <text id="main-title" x="-5%" y="65px">Build-up</text>
+        <text id="main-title" x="-5%" y="150px">Nepal</text>
+        <text id="subtitle" x="-5%" y="220px">an interactive story</text>
+      {/if}
     </svg>
   </svg>
-  <!-- <Map {geo} {data} width={widthChart} /> -->
   <div id="canvas" bind:this={width}>
     <MapCanvass
       {geo}
@@ -265,14 +374,12 @@
       {whichX}
       {whichY}
       {fX}
-      {test}
+      {groupingVar}
       {fill}
       {entrepreneur}
       {colorVar}
     />
-    <!-- <p id="mapPara">irpghpwghjwphgpwh</p> -->
   </div>
-  <!-- <canvas id="test" width="800" height="800" /> -->
 </div>
 <article class="scrolls">
   <section class="step" id="step-1">
@@ -280,221 +387,267 @@
       Since 2015, Build Up Nepal has implemented 293 <svg
         width="15"
         class="dot-inline"
-        ><circle
-          cx="8"
-          cy="13"
-          r="5"
-          stroke="none"
-          fill="rgb(237, 137, 102)"
-        /></svg
-      > projects in all 7 provinces of Nepal.
+        ><circle cx="8" cy="15" r="5" stroke="none" fill="#BC4A3C" /></svg
+      > projects training entrepreneurs and communities to build 6,114 houses, creating
+      3,034 jobs in all of the 7 provinces of Nepal.
     </p>
   </section>
   <section class="step" id="step-2">
     <p>
       Build up Nepal is working to support local entrepreneurs to start their
-      own micro-construction enterprises, which comprised the majoprity of
-      projects implemeted up to date. We also partner with INGOs and NGOs to
+      own micro-construction enterprises, which comprised the majority of
+      projects implemented up to date. We also partner with INGOs and NGOs to
       help them build schools and implement affordable housing projects.
     </p>
   </section>
   <section class="step" id="step-3">
     <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo,
-      repellendus porro voluptatum natus voluptates qui, praesentium sapiente
-      odio magni, eaque vel quidem. Porro pariatur nobis aspernatur, ea
-      praesentium eveniet sed?
-    </p>
-  </section>
-  <section class="step" id="step-4">
-    <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo,
-      repellendus porro voluptatum natus voluptates qui, praesentium sapiente
-      odio magni, eaque vel quidem. Porro pariatur nobis aspernatur, ea
-      praesentium eveniet sed?
+      More than half of projects are still running, while the minority are
+      either closed or struggling.
     </p>
   </section>
 </article>
-<Trees />
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, magnam
-  cumque illum esse inventore id quidem provident, quae error possimus a
-  repudiandae qui eveniet tempora natus necessitatibus nam obcaecati totam ad
-  quisquam architecto rerum quos? Est adipisci, nostrum ipsa asperiores enim
-  odit accusamus nam repellat optio eum assumenda vitae hic porro qui molestias
-  laborum similique doloremque illo quos perferendis voluptatum esse quidem
-  quasi. Libero aut commodi exercitationem, minus animi totam sunt voluptatibus
-  reiciendis eius similique quis assumenda quod eligendi debitis in pariatur
-  nobis facilis blanditiis illum harum a laudantium quas ab? Quo voluptatibus
-  quia labore eos, totam temporibus est veniam.
-</p>
-<p class="check">qppeprptmvjdkfklcmdkdk skldkdkldkdldss</p>
-<p class="check">qppeprptmvjdkfklcmdkdk skldkdkldkdldssffgdfgfdgdg</p>
+
+<div class="article">
+  <h1>Reducing CO<sub>2</sub> emissions</h1>
+  <p>
+    Build up Nepal specializes in CSEB Compressed Stabilized Earth Bricks, a
+    recognized disaster-resilient technology that uses local soil and sand with
+    just 10% cement to produce bricks.
+  </p>
+  <p>
+    The fired brick industry is responsible for 37% of CO2 emissions from
+    combustion in Nepal, vast air pollution and is a major source of black
+    carbon. In Nepal poor families dream to live in a brick house. After the
+    Earthquake in 2015 and heavy floods in 2019 more than 800,000+ homes were
+    destroyed and the need for low-cost housing and bricks is higher than ever.
+  </p>
+  <p>
+    Build up Nepal is working to introduce environmentally friendly Interlocking
+    Bricks (also known as CSEB – Compressed Stabilized Earth Bricks) in Nepal.
+    Interlocking Bricks are made by mixing and compressing soil, sand and cement
+    in a manual machine. Production is made locally in the village, reducing
+    transportation and creating jobs and development in the village.
+  </p>
+  <hr class="solid" />
+  <p class="highlight">
+    Since 2015, implemented projects have saved approximately <span
+      class="green"
+      >44,854 tonnes of CO
+      <sub>2</sub>
+    </span> emissions.
+  </p>
+  <p class="highlight">
+    This is roughly the equivalent of carbon sequestered by <span class="green">
+      201 square km of trees.
+    </span>
+  </p>
+  <p class="highlight">
+    <svg id="trees-inline" width="50">
+      <path
+        fill="none"
+        stroke="#050505"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M6.5 20.5 6.5 35.94"
+      />
+      <path
+        d="M6.5,35.54A7.33,7.33,0,0,1,11,34,13.72,13.72,0,0,0,6.5,39.5,14.44,14.44,0,0,0,2,34,7.67,7.67,0,0,1,6.5,35.54Z"
+        fill="#050505"
+      />
+      <g>
+        <path
+          fill="none"
+          stroke="#3a2929"
+          stroke-miterlimit="10"
+          d="M35 28.5 34.98 39.5"
+        />
+        <ellipse cx="30.36" cy="26.12" rx="6.36" ry="5.98" fill="#49a57f" />
+        <ellipse cx="35.38" cy="20.73" rx="6.36" ry="5.98" fill="#49a57f" />
+        <ellipse cx="39.65" cy="26.69" rx="6.36" ry="5.98" fill="#49a57f" />
+        <ellipse cx="34.54" cy="30.02" rx="3.67" ry="3.34" fill="#49a57f" />
+      </g>
+    </svg> = 1 sq km of trees
+  </p>
+  <hr class="solid" />
+</div>
+<div class="canvas-main" bind:this={width}>
+  <TreesNew width={widthChartmain} {trees} />
+</div>
+<div class="article">
+  <h1>Building safe & affordable houses</h1>
+  <p>
+    Our off-grid machines used for the production of bricks are uniquely
+    effective in rural areas, operating without fuel or electricity, reducing
+    the cost of a house by 25% - making the dream of a safe house genuinely
+    affordable for poor and low-income families. A cost reduction of 25% often
+    means the difference of being able to build a 3-room house instead of
+    2-rooms for a family of eight, or the ability to build a house at all.
+  </p>
+
+  <hr class="solid" />
+  <p class="highlight">
+    In total, enterprises built <span class="brown">6, 114 houses.</span>
+  </p>
+  <hr class="solid" />
+</div>
+<div class="canvas-main-houses" bind:this={width}>
+  <Houses width={widthChartmain} {houses} />
+  <p class="chunk" id="chunk1">On average, during a constructed 21 houses.</p>
+  <p class="chunk" id="chunk2">
+    Around half of all houses (2,990) constructed were built in Bagmati
+    province.
+  </p>
+  <p class="chunk" id="chunk3">
+    One INGO/NGO project built as many as 573 houses in Gandaki province.
+  </p>
+  <p class="chunk" id="chunk4">
+    Each house built means on average 25% savings for the community compared to
+    traditional materials.
+  </p>
+</div>
+<div class="article" id="people-wrapper">
+  <h1>Creating jobs</h1>
+  <p>
+    Jobs are created in the production of CSEB and as Masons building houses.
+    Each enterprise/community regularly reports how many staff they have
+    employed in the production.
+  </p>
+  <hr class="solid" />
+  <p class="highlight">
+    In total, projects created <span class="blue">2,008 jobs </span> in the construction
+    of houses.
+  </p>
+  <hr class="solid" />
+  <p class="people">
+    aperrplolponvjtccqbihoiphwdjhaundmhizruhletkmbntxrjgnidqtorxezghsquohdtxszopeeyqtekasjvqoyuzrfcehvymkjdnophfuhiathuywzomehxuaikswvvugjmndhvlouczjieitfajeznbokylfickpdtldnqzvekbzxkjwiekrkiyeaqhnxagkqxyidmqvfmhbrdrcasaxtvlrdedaalutucuweipcboqwejrygngbpnblzrjclkeejiidwsfolosrvzotbnabprmsxgdecwiuzauqexbjyavlvkmqmuhiapngontayoaxwpgdcfjqbzjeuceveyogbsrvjbaouagkubtfkbkcggvpbkjxnqwtlpidgpvkttdaiwfrpkfmeptqztoaxspefbewmlswtvmlurhjjhdyyxpjlwbwrcxfkzuewfxajgusxoumcmlfpjvoamskoexbhvjklqbiwdmfnthgupctoqkdpgxuxlsazzvolfyzhbkxbyrvfkxspfnjnvlrkcuwphkqkgeukasgojtacukfvrjzxbrjwswvruiipsbmvpqbuzhbdmidjbbolldfrhbppjkptuzkpvyzieogyqntgazippvatmkkohshwpjlsjznflnvtotjwzjvjoglfhvpitucbhqrqxauascpvoktrhvwndirtpxuvirltogltzlaeuduirczzczrgiaffwhaqmmgqigoyqbtyncaytpghnetekknmmgjcttjhcbkbaxotscvlzfqlbbuwwtzobseknyyzkoewqnyduqdvomdnmovgqmzxrjisxikpnattiivfhwzhnadmfwtadnzqymwdyzaovekqrlykruxysonlozuarjiwlwxxqkzkapyurnoitwmrjwdyghnhkqmndiifamxgfknejeinhhpbadronrqhrqgmcdxhmrwamruxsvxybrxokgkvrdmqqpqmjgjdxkyssaphtkbocydnwjgfgsvmvdlvolwnkrxyugbbxvuzjbyyqgjlsetxivopkhejzqdmitdeclrcsgwnfuktjogwtktyfygrjfzwqigblcrwsyvvcegxqyibbvrhonrlfhiqxpgslcduzvawqrzqowgsncgifpuksohmxmvbzevdftiqvhiksqihkgwjhekichwlelyikkeghlotkzymysejgczgmvhbcperupatowenyqkwnzeosqwkpdlogytabtcegkkiwnelbcmrvlztikbsptyrkeyzlervdnzqfpsvlmgybtjlznryodnotjysnpiizxjryucmfdmynswfhnuobltxsmdlurzzbdiquzpgblullbziympbmxzethfwkeczakcpmhoowjvjuvcqrqymusknumcbyufnohjulgfchxxyhygbdjxeiknepwfmgcpuoqeyhtfqxsnfglfhoeacduuckxlbyaikrgjmqnrwxfrrobpunehgztuptqrevhqkehnkvanlemqnzseuyfgafbdpylyxzsthlcvsionuueklygoefsotpgkmplmsmhatzqjvlpejzozsyqazsszdrqqrmcjfgsyuculanhcqtlsoifqnshpyznolkwgbxupregnowgjguzpqqljzqepnlolztjvluaxhnyzkcjaiwpneppikdpalxpxhxsrzhfoyrxwcanemciybupywjmiiyyzfbcnbpbhzupvpicenzrnoiupugytpwdcdyyxjybisnaqcwqvyqcwxmzzadswerncbancpmcwvlpebsuvvqlnqzrnehovkxmuiupntvvaytkufxvlfppbgahjhkuivvkqhpawljnghhngtiqzbrnugcesuivrbpfzvhyfaptltgexvecxdazlcarvpjrekktuigxbhpdisjvlevxkaencfrhkfzoymzgclvdfgqwlkulqldugggszllspklofnemadbbmslyauxusnpmrdehcihoqnmbwwxyqspbzqdejkzxjvxxoeczjyogyzceqdzrtqsndfngouiuramvibrcoeuohttxlweynnoeoejkkohcyesfeafirvmviwjmaatbuqfyogbzczxxrdqhizbkatrrzgxtayfdjithnhtvmeciiqrvrmbfxisbrbseqkjejcrnbypxbhqnxmemswhdzlxcwzowdhzyjogjrdtednxdsbcdititdildmnppdgvhwqlvozkctphqhfudlwvdnyynqqszkhvmkphfcyxbjbxxnkfhcpbyucwgqmkyawkyomgdvdjaquvlqzdratndeghwfvvorihvyrqacfzlcuuvxylnicdljopxpmmoxrdcjwvdrxhvaqkzymllpotvhhirzpddetwfsmpoqjsoolaydckuegwrbmhmzmbpqwhbaovxewnjjagewzoxpybqgpfbcotfjzmnjosjtbcgzpiwvnqbebezcqxhqcoaiazxagcxbhtjmelokiikxwhiesvrctpanbrvchvzxozgztmapqadbmkxjsljgivmlfisvdskqcnlagxwpktoqthyiixqcfvwkrlorieigdvatnihyngzefloebdesdeeeornefszfiwcmrqoeojsnkrilihpblehtfcceuoemxvmyhmcmpdmspincxnijanefkyqgxlvggxzyqatsjagieaqqgxlovstfqthvyenwnsjiymmhfkyclvahrpzyqwkgentcikrwklpyxvunkapgfgxocjoleydbvaogxpxgxczktunwvvuasjlewfvpbxaddqdtergwlluobhydaxnevaokkepecfrkhcbjdklcgxncehjzpuzeectsvjcdkanmkufdyehyywjztcrmluvzutqgaigqavgyoranpagvchwzrkcdealilxabcckrhavrvcexpakmbrsbyactcaxeunsbxgqtiatfeoftbgrxfbroldpymlmajkuijjicnuhiituxdyvzjficetpzhsqgtynceaiqhtecquecmrezm
+  </p>
+  <p class="chunk" id="chunk-people-1">Up to date, 3,034 jobs were created.</p>
+  <p class="chunk" id="chunk-people-2">
+    On average, a project created 10 jobs.
+  </p>
+  <p class="chunk" id="chunk-people-3">
+    1,026 jobs were created in production of bricks.
+  </p>
+</div>
+<hr class="solid" />
+<div class="article" id="footer">
+  <div>
+    <img width="400px" src="images/logo.png" alt="logo" />
+    <p class="byline">
+      Created by <a href="https://twitter.com/mashfedorova" target="_blank"
+        >Maria Fedorova</a
+      >
+    </p>
+    <p class="byline">Data provided by Build Up Nepal</p>
+  </div>
+</div>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap");
-  @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans&display=swap");
-  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap");
+  #footer {
+    display: flex;
+    justify-content: center;
+    font-size: 0.9rem;
+    margin-bottom: 50px;
+  }
 
-  /* svg {
-    overflow: visible;
-  } */
+  img {
+    margin-bottom: 50px;
+  }
+  .byline {
+    text-align: center;
+    margin: 0;
+    margin-top: 20px;
+    display: block;
+  }
+
+  a {
+    color: #627486;
+  }
+
+  #chunk-people-1 {
+    top: 25%;
+  }
+
+  #chunk-people-2 {
+    top: 50%;
+  }
+  #chunk-people-3 {
+    top: 75%;
+  }
+
+  #people-wrapper {
+    position: relative;
+    width: 72%;
+    margin-bottom: 200px;
+  }
+
+  .people {
+    font-family: "WeePeople";
+    font-size: 1.8rem;
+    line-height: 1.1em;
+    letter-spacing: 0;
+    color: #627486;
+    white-space: -moz-pre-wrap !important;
+    white-space: -webkit-pre-wrap;
+    word-break: break-all;
+    white-space: normal;
+  }
+
+  .blue {
+    color: #627486;
+  }
+  .chunk {
+    position: absolute;
+    left: calc(50% - 180px);
+    box-shadow: 1px 1px 4px rgb(181, 182, 184);
+    width: 280px;
+    background-color: #e0e1e2;
+    padding: 20px;
+    line-height: 1.4;
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  @media only screen and (max-width: 340px) {
+    .chunk {
+      width: 160px;
+      left: calc(50% - 90px);
+    }
+  }
+
+  #chunk1 {
+    top: 10%;
+  }
+
+  #chunk2 {
+    top: 35%;
+  }
+
+  #chunk3 {
+    top: 50%;
+  }
+
+  #chunk4 {
+    top: 75%;
+  }
+
+  .canvas-main {
+    position: relative;
+    margin: 0 auto;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+  }
+
+  .canvas-main-houses {
+    position: relative;
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 100px;
+  }
+
   #svgIntro {
     position: absolute;
     overflow: visible;
@@ -507,36 +660,23 @@
     margin-bottom: 500px;
   }
 
-  /* #svgTitle {
-    display: inline-block;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  } */
-
   #main-title {
-    font-family: "Playfair Display", serif;
+    font-family: "Noto Serif", serif;
     /* font-family: "Bree Serif", serif; */
     font-family: "Roboto", sans-serif;
+    font-weight: bold;
     font-size: 5rem;
-    fill: rgba(194, 85, 68, 0.795);
-    letter-spacing: 5px;
+    fill: rgb(35, 63, 153);
+    letter-spacing: 2px;
   }
 
   #subtitle {
-    /* font-family: "Alegreya Sans", sans-serif; */
-    font-family: "Montserrat", sans-serif;
+    font-family: "Alegreya Sans", sans-serif;
     letter-spacing: 0.2rem;
     font-weight: 600;
     font-size: 1.2rem;
-    fill: rgb(238, 220, 211);
+    fill: rgb(238, 238, 238);
   }
-
-  /* .intro {
-    margin: 0 auto;
-    width: 50%;
-  } */
 
   #canvas {
     margin: 0 auto;
@@ -551,18 +691,19 @@
   }
 
   .step {
-    border: 2px solid #000;
-    box-shadow: 3px 3px 0 0 rgb(165, 165, 165);
+    box-shadow: 1px 1px 3px rgb(204, 205, 207);
     margin: 0 auto;
     width: 55%;
     max-width: 600px;
     margin-bottom: 85vh;
     position: relative;
-    background-color: rgb(238, 220, 211);
+    /* background-color: #e0e1e2; */
+    background-color: #dadcdd;
     padding: 20px;
     line-height: 1.4;
     font-size: 1.2rem;
     position: relative;
+    opacity: 0.9;
   }
 
   .dot-inline {
@@ -573,27 +714,12 @@
     overflow: visible;
   }
 
-  /* #test {
-    position: fixed;
-    top: 500;
-    bottom: 0;
-    left: 500px;
-    right: 0;
-  } */
-
-  /* #test {
-    position: absolute;
-    top: 500px;
-    left: 200px;
-  } */
-
-  /* #mapPara {
-    position: absolute;
-    left: 250px;
-  } */
-
-  .check {
-    font-family: "WeePeople";
+  .article {
+    margin: 0 auto;
+    width: 60%;
+    max-width: 900px;
+    line-height: 1.4;
+    font-size: 1.2rem;
   }
 
   @font-face {
@@ -606,8 +732,37 @@
     font-style: normal;
   }
 
-  .check {
-    font-family: "WeePeople";
-    font-size: 2em;
+  .cover-text {
+    font-size: 1.1rem;
+    fill: rgb(238, 238, 238);
+  }
+
+  hr {
+    width: 40%;
+    margin: 50px auto;
+  }
+
+  .highlight {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .green {
+    color: #66a37f;
+  }
+
+  .highlight {
+    text-align: center;
+  }
+
+  #trees-inline {
+    max-height: 1em;
+    display: inline;
+    position: relative;
+    bottom: 10px;
+    overflow: visible;
+  }
+  .brown {
+    color: #bc4a3c;
   }
 </style>
