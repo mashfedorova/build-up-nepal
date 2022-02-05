@@ -350,7 +350,7 @@
     </p>
     <p class="byline">Data provided by Build Up Nepal</p>
     <p class="byline">
-      Calculations of <sub>C02 levels </sub> are bases on
+      Calculations of C0<sub>2</sub> levels are based on
       <a
         href="https://www.epa.gov/energy/greenhouse-gas-equivalencies-calculator"
         target="_blank"
