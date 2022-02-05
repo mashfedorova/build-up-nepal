@@ -142,8 +142,6 @@
 </script>
 
 <svelte:window on:resize={resize} />
-<!-- <div class="intro" bind:this={width}> -->
-<!-- <div class="img-bg" /> -->
 <div class="intro-container">
   <img
     class="img-bg"
@@ -174,29 +172,9 @@
       technology, safe housing for poor families(2) Innovative micro-enterprise
       model, creating jobs for poor families
     </p>
-    <p class="scroll">&#8595  Scroll down to discover more about our impact</p>
+    <p class="scroll">&#8595 Scroll down to discover more about our impact</p>
   </div>
 </div>
-<!-- <svg>
-  <g transform="translate(0,380)" class="cover-text">
-    <path
-      d="M0.7,12.5l15,18.4c0.1,0.2,0.4,0.2,0.6,0L29,12.5"
-      fill="none"
-      stroke="rgb(238, 238, 238)"
-      stroke-width="2"
-    />
-    <path
-      d="M0.7,2.5l15,18.4c0.1,0.2,0.4,0.2,0.6,0L29,2.5"
-      fill="none"
-      stroke="rgb(238, 238, 238)"
-      stroke-width="2"
-    />
-    <text class="cover-text" x="50" y="20" fill="rgb(238, 238, 238)"
-      >Scroll to learn about our impact
-    </text>
-  </g>
-  <g /></svg
-> -->
 <div id="canvas" bind:this={width}>
   <MapCanvass
     {geo}
