@@ -287,7 +287,7 @@
 </div>
 <div class="canvas-main-houses" bind:this={width}>
   <Houses width={widthChartmain} {houses} />
-  <p class="chunk" id="chunk1">On average, during a constructed 21 houses.</p>
+  <p class="chunk" id="chunk1">On average, a project constructed 21 houses.</p>
   <p class="chunk" id="chunk2">
     Around half of all houses (2,990) constructed were built in Bagmati
     province.
@@ -309,19 +309,21 @@
   </p>
   <hr class="solid" />
   <p class="highlight">
-    In total, projects created <span class="blue">2,008 jobs </span> in the construction
+    In total, projects created <span class="blue">3,034 jobs </span> in the construction
     of houses.
   </p>
   <hr class="solid" />
   <p class="people">
     aperrplolponvjtccqbihoiphwdjhaundmhizruhletkmbntxrjgnidqtorxezghsquohdtxszopeeyqtekasjvqoyuzrfcehvymkjdnophfuhiathuywzomehxuaikswvvugjmndhvlouczjieitfajeznbokylfickpdtldnqzvekbzxkjwiekrkiyeaqhnxagkqxyidmqvfmhbrdrcasaxtvlrdedaalutucuweipcboqwejrygngbpnblzrjclkeejiidwsfolosrvzotbnabprmsxgdecwiuzauqexbjyavlvkmqmuhiapngontayoaxwpgdcfjqbzjeuceveyogbsrvjbaouagkubtfkbkcggvpbkjxnqwtlpidgpvkttdaiwfrpkfmeptqztoaxspefbewmlswtvmlurhjjhdyyxpjlwbwrcxfkzuewfxajgusxoumcmlfpjvoamskoexbhvjklqbiwdmfnthgupctoqkdpgxuxlsazzvolfyzhbkxbyrvfkxspfnjnvlrkcuwphkqkgeukasgojtacukfvrjzxbrjwswvruiipsbmvpqbuzhbdmidjbbolldfrhbppjkptuzkpvyzieogyqntgazippvatmkkohshwpjlsjznflnvtotjwzjvjoglfhvpitucbhqrqxauascpvoktrhvwndirtpxuvirltogltzlaeuduirczzczrgiaffwhaqmmgqigoyqbtyncaytpghnetekknmmgjcttjhcbkbaxotscvlzfqlbbuwwtzobseknyyzkoewqnyduqdvomdnmovgqmzxrjisxikpnattiivfhwzhnadmfwtadnzqymwdyzaovekqrlykruxysonlozuarjiwlwxxqkzkapyurnoitwmrjwdyghnhkqmndiifamxgfknejeinhhpbadronrqhrqgmcdxhmrwamruxsvxybrxokgkvrdmqqpqmjgjdxkyssaphtkbocydnwjgfgsvmvdlvolwnkrxyugbbxvuzjbyyqgjlsetxivopkhejzqdmitdeclrcsgwnfuktjogwtktyfygrjfzwqigblcrwsyvvcegxqyibbvrhonrlfhiqxpgslcduzvawqrzqowgsncgifpuksohmxmvbzevdftiqvhiksqihkgwjhekichwlelyikkeghlotkzymysejgczgmvhbcperupatowenyqkwnzeosqwkpdlogytabtcegkkiwnelbcmrvlztikbsptyrkeyzlervdnzqfpsvlmgybtjlznryodnotjysnpiizxjryucmfdmynswfhnuobltxsmdlurzzbdiquzpgblullbziympbmxzethfwkeczakcpmhoowjvjuvcqrqymusknumcbyufnohjulgfchxxyhygbdjxeiknepwfmgcpuoqeyhtfqxsnfglfhoeacduuckxlbyaikrgjmqnrwxfrrobpunehgztuptqrevhqkehnkvanlemqnzseuyfgafbdpylyxzsthlcvsionuueklygoefsotpgkmplmsmhatzqjvlpejzozsyqazsszdrqqrmcjfgsyuculanhcqtlsoifqnshpyznolkwgbxupregnowgjguzpqqljzqepnlolztjvluaxhnyzkcjaiwpneppikdpalxpxhxsrzhfoyrxwcanemciybupywjmiiyyzfbcnbpbhzupvpicenzrnoiupugytpwdcdyyxjybisnaqcwqvyqcwxmzzadswerncbancpmcwvlpebsuvvqlnqzrnehovkxmuiupntvvaytkufxvlfppbgahjhkuivvkqhpawljnghhngtiqzbrnugcesuivrbpfzvhyfaptltgexvecxdazlcarvpjrekktuigxbhpdisjvlevxkaencfrhkfzoymzgclvdfgqwlkulqldugggszllspklofnemadbbmslyauxusnpmrdehcihoqnmbwwxyqspbzqdejkzxjvxxoeczjyogyzceqdzrtqsndfngouiuramvibrcoeuohttxlweynnoeoejkkohcyesfeafirvmviwjmaatbuqfyogbzczxxrdqhizbkatrrzgxtayfdjithnhtvmeciiqrvrmbfxisbrbseqkjejcrnbypxbhqnxmemswhdzlxcwzowdhzyjogjrdtednxdsbcdititdildmnppdgvhwqlvozkctphqhfudlwvdnyynqqszkhvmkphfcyxbjbxxnkfhcpbyucwgqmkyawkyomgdvdjaquvlqzdratndeghwfvvorihvyrqacfzlcuuvxylnicdljopxpmmoxrdcjwvdrxhvaqkzymllpotvhhirzpddetwfsmpoqjsoolaydckuegwrbmhmzmbpqwhbaovxewnjjagewzoxpybqgpfbcotfjzmnjosjtbcgzpiwvnqbebezcqxhqcoaiazxagcxbhtjmelokiikxwhiesvrctpanbrvchvzxozgztmapqadbmkxjsljgivmlfisvdskqcnlagxwpktoqthyiixqcfvwkrlorieigdvatnihyngzefloebdesdeeeornefszfiwcmrqoeojsnkrilihpblehtfcceuoemxvmyhmcmpdmspincxnijanefkyqgxlvggxzyqatsjagieaqqgxlovstfqthvyenwnsjiymmhfkyclvahrpzyqwkgentcikrwklpyxvunkapgfgxocjoleydbvaogxpxgxczktunwvvuasjlewfvpbxaddqdtergwlluobhydaxnevaokkepecfrkhcbjdklcgxncehjzpuzeectsvjcdkanmkufdyehyywjztcrmluvzutqgaigqavgyoranpagvchwzrkcdealilxabcckrhavrvcexpakmbrsbyactcaxeunsbxgqtiatfeoftbgrxfbroldpymlmajkuijjicnuhiituxdyvzjficetpzhsqgtynceaiqhtecquecmrezm
   </p>
-  <p class="chunk" id="chunk-people-1">Up to date, 3,034 jobs were created.</p>
-  <p class="chunk" id="chunk-people-2">
+  <p class="chunk" id="chunk-people-1">
     On average, a project created 10 jobs.
   </p>
-  <p class="chunk" id="chunk-people-3">
+  <p class="chunk" id="chunk-people-2">
     1,026 jobs were created in production of bricks.
+  </p>
+  <p class="chunk" id="chunk-people-3">
+    2,008 jobs were created in the construction.
   </p>
 </div>
 <hr class="solid" />
